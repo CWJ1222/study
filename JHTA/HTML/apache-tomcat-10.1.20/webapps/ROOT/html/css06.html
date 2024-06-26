@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        div + p{color: red;}
+    </style>
+</head>
+<!--
+    트리구조 dom tree(documet object model tree)
+    효과를 세대별로 주기 가능
+            div > p{color: red;} ~ 자손세대만 영향 미침 CSS2, CSS4 만 레드 자손셀렉터
+
+            div p{color: red;} ~ 후손셀렉터 2,3,4 레드
+            div + p{color: red;} 5만 레드 동생 아우 셀렉터
+
+
+
+-->
+<body>
+    <p>
+        Hello CSS1
+    </p>
+    <div>
+        <p>Hello CSS2</p>
+        <span>
+            <p>Hello CSS3</p>
+        </span>
+        <p>Hello CSS4</p>
+    </div>
+    <p>Hello CSS5</p>
+</body>
+</html>

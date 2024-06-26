@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+        다중선택
+        checkbox 다중선택으로 대부분 한다
+        radio는 단일선택
+    -->
+    <form>
+        <input type="checkbox"/>사과<br/>
+        <input type="checkbox"checked /> 참외<br/>
+        <input type="checkbox"/>수박<br/>
+
+    </form>
+
+        <!--
+        단일선택 name
+    -->
+
+    <form>
+        <input type="radio" name="r"/>사과<br/>
+        <input type="radio"name="r" checked /> 참외<br/>
+        <input type="radio"name="r"/>수박<br/>
+    </form>
+
+    <br/>
+    <form>연락처
+        <select>
+            <option>사과</option>
+            <option>참외</option>
+            <option>수박</option>
+        </select>
+        - <input type="text">
+    </form>
+
+    <br/>
+    <p>
+        연락처 : <select name = "phone1">
+            <option value = "010">010</option>
+            <option value = "011">011</option>
+            <option value = "016">016</option>
+            <option value = "017">017</option>
+            <option value = "019">019</option>
+
+        </select> - <input type="text" maxlength="4" size="4" name="phone2">
+        - <input type="text" maxlength="4" size="4" name="phone3">
+    </p>
+</body>
+</html>

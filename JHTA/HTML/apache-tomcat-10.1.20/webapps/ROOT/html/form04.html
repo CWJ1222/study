@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+        특별입력
+        파일선택 자료실같은..
+        데이터숨김
+        value 는 선택
+        step 은 간격
+
+        선택지 있는 텍스트입력
+    -->
+    <form>
+        <input type="file"/><br/><br/>
+        <input type="hidden" value="데이터"/><br/><br/>
+
+        <input type="color" value="#ff00ff"/><br/><br/>
+        <input type="date" value="2024-01-01"/><br/><br/>
+        <input type="number" value="5" step="5"/><br/><br/>
+
+        <input type="number" min="0" max="50" value="5" step="5"/><br/><br/>
+
+    </form>
+
+    <form>
+        <input type="text" list="browsers"/>
+        <datalist id="browsers">
+            <option value="Internet Edge"></option>
+            <option value="FireFox"></option>
+            <option value="Chrome"></option>
+            <option value="Safari"></option>
+
+        </datalist>
+    </form>
+</body>
+</html>

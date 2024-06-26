@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<!--
+   테이블 안에 또 테이블 들어갈 수 있음
+   1. 표
+   2. 레이아웃
+   테이블중심 -> 문단 css 중심으로 변경
+-->
+
+<table border="1" width="300" height="300" >
+    <tr>
+    <th>1열</th>
+    <th>2열</th>
+    <th>3열</th>
+    </tr>
+    <tr>
+    <td>1열</td>
+    <td>2열</td>
+    <td>3열</td>
+    </tr>
+    <tr>
+    <td>4열</td>
+    <td rowspan="2">병합 후 내부 표
+    <table border="1" width="100" height="100">
+        <tr>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+    </table>
+    </td>
+    <td>5</td>
+    </tr>
+    <tr>
+    <td>6</td>
+    <td>7</td>
+    </tr>
+</table>
+</body>
+</html>
