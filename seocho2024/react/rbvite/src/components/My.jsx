@@ -1,22 +1,34 @@
-import { useEffect, useLayoutEffect, useMemo, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from "react";
 import { FaTrashAlt, FaEdit } from "react-icons/fa";
-import Login from "./Login";
+import { MemoedLogin } from "./Login";
 import Profile from "./Profile";
 import Button from "./atoms/Button";
 import SampleAtoms from "./atoms/SampleAtoms";
-import ItemEdit, { MemoedItemEdit } from "./ItemEdit";
-// import ItemEdit, { MemoedItemEdit } from "./ItemEdit";
+import { MemoedItemEdit } from "./ItemEdit";
+import { useCount } from "../hooks/counter-context";
+import Hello from "./Hello";
+import { useSession } from "../hooks/session-context";
+import clsx from "clsx";
 
-export default function My({
-  session: { loginUser, cart },
-  signOut,
-  signIn,
-  removeItem,
-  addItem,
-  saveItem,
-}) {
+export default function My() {
+  const {
+    session: { loginUser, cart },
+    saveItem,
+    addItem,
+    removeItem,
+    login,
+  } = useSession();
+
   const [isAdding, setIsAdding] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
+
+  const { count } = useCount();
 
   const cancelAdding = () => {
     setIsAdding(false);
@@ -60,50 +72,83 @@ export default function My({
 
   const addingItem = useMemo(() => ({ name: "", price: 1000 }), []);
 
-  const editing = (itemId) => {
-    const item = cart.find((item) => item.id === itemId);
-    setEditingItem(item);
-    setPrePrice(item.price);
-  };
-  const cancelEditing = () => {
-    setEditingItem(null);
-    setPrePrice(0);
-  };
-  const editItem = (item) => {
-    saveItem(item);
-    if (prePrice !== item.price) setTotalPriceToggleFlag(!totalPriceToggleFlag);
-  };
+  // const editing = (itemId) => {
+  //   const item = cart.find((item) => item.id === itemId);
+  //   setEditingItem(item);
+  //   setPrePrice(item.price);
+  // };
+  const editing = useCallback(
+    (itemId) => {
+      console.log("🚀  itemId:", itemId);
+      const item = cart.find((item) => item.id === itemId);
+      setEditingItem(item);
+      setPrePrice(item.price);
+    },
+    [cart],
+  );
 
   const [totalPriceToggleFlag, setTotalPriceToggleFlag] = useState(false);
   const [prePrice, setPrePrice] = useState(0);
   const totalPrice = useMemo(() => {
-    console.log("tttotalPrice>>", totalPriceToggleFlag);
+    console.warn("tttotalPrice>>", totalPriceToggleFlag);
     return cart?.reduce((acc, item) => acc + item.price, 0);
   }, [cart, totalPriceToggleFlag]);
 
+  const cancelEditing = useCallback(() => {
+    setEditingItem(null);
+    setPrePrice(0);
+  }, []);
+
+  const editItem = useCallback(
+    (item) => {
+      saveItem(item);
+      if (prePrice !== item.price)
+        setTotalPriceToggleFlag(!totalPriceToggleFlag);
+
+      // setTotalPriceToggleFlag(prePrice !== item.price);
+    },
+    [saveItem, prePrice, totalPriceToggleFlag],
+  );
+
+  const [isUnder3, setIsUnder] = useState(false);
+  useEffect(() => {
+    setIsUnder(cart?.length < 3);
+  }, [cart]);
+
   return (
     <>
-      {loginUser ? (
-        <Profile name={loginUser?.name} signOut={signOut} />
-      ) : (
-        <Login singIn={signIn} />
+      {loginUser && (
+        <div>
+          <Hello name={loginUser.name} age={loginUser.age} />
+        </div>
       )}
 
-      <h1>
-        Second: {time} - {prePrice}
-      </h1>
-      <Button
-        text="TotalPrice"
-        onClick={() => setTotalPriceToggleFlag(!totalPriceToggleFlag)}
-      />
+      {loginUser ? <Profile /> : <MemoedLogin signIn={login} />}
 
-      <div className="my-5 border text-center">
-        <ul>
+      <h1>
+        Second: {time} - {count}
+      </h1>
+
+      {/* <div className="my-5 border-2 border-blue-500 border-red-500 text-center"> */}
+      <div
+        className={clsx("my-5 border-2 text-center", {
+          "border-blue-500": !isUnder3,
+          "border-red-500": isUnder3,
+        })}
+      >
+        {/* <ul className="border-b-2 border-red-500"> */}
+        {/* <ul className={clsx("border-b-2", "border-red-500")}> */}
+        <ul
+          className={clsx({
+            "border-b-2": true,
+            "border-red-500": isUnder3,
+          })}
+        >
           {cart?.length
             ? cart.map((item) => (
                 <li key={item.id} className="flex justify-between border-b">
                   {editingItem?.id === item.id ? (
-                    <ItemEdit
+                    <MemoedItemEdit
                       item={editingItem}
                       cancel={cancelEditing}
                       save={editItem}
