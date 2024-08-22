@@ -24,7 +24,7 @@ void printPolynomial(Node* poly) {
         if (poly->next != NULL) printf(" + ");
         poly = poly->next;
     }
-    printf("\\n");
+    printf("\n");
 }
 
 // 다항식 덧셈
@@ -92,17 +92,17 @@ int main() {
     poly2->next = createNode(1, 1);
     poly2->next->next = createNode(5, 0);
 
-    printf("첫 번째 다항식: ");
+    printf("첫 번째 다항식: \n");
     printPolynomial(poly1);
-    printf("두 번째 다항식: ");
+    printf("두 번째 다항식: \n");
     printPolynomial(poly2);
 
     Node* sum = addPolynomials(poly1, poly2);
-    printf("덧셈 결과: ");
+    printf("덧셈 결과: \n");
     printPolynomial(sum);
 
     Node* product = multiplyPolynomials(poly1, poly2);
-    printf("곱셈 결과: ");
+    printf("곱셈 결과: \n");
     printPolynomial(product);
 
     return 0;
